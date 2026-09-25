@@ -5,6 +5,8 @@
 #define CalibrationPrimaryGeneratorAction_h 1
 
 #include "G4VUserPrimaryGeneratorAction.hh"
+#include "G4SystemOfUnits.hh"
+#include "globals.hh"
 
 class G4ParticleGun;
 class G4Event;
@@ -21,6 +23,7 @@ namespace Calibration
 
         private:
         G4ParticleGun* fParticleGun=nullptr;
+        const G4double rMax = 0.5*cm;
     };
 }
 

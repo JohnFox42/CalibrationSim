@@ -21,7 +21,13 @@ namespace Calibration
 
     void SteppingAction::UserSteppingAction(const G4Step* step)
     {
-
+        auto detectorConstruction = static_cast<const DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+        auto* postVolume = step->GetPostStepPoint()->GetPhysicalVolume();
+        if (postVolume && postVolume->GetLogicalVolume()==detectorConstruction->GetGeDetector() && !(fEventAction->ReturnRecorded()))
+        {
+            fRunAction->IterateGeHitCount();
+            fEventAction->UpdateRecorded(true);
+        }
     }
 }
     

@@ -16,7 +16,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     DetectorConstruction()= default;
     ~DetectorConstruction() override = default;
 
+    G4LogicalVolume* GetGeDetector()const {return fGeDetector;}
+
     G4VPhysicalVolume* Construct() override;
+
+    private:
+    G4LogicalVolume* fGeDetector = nullptr;
 };
 }
 

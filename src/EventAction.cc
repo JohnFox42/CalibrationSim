@@ -14,6 +14,12 @@ namespace Calibration
 
     void EventAction::BeginOfEventAction(const G4Event*)
     {
+        Recorded = false;
+    }
+
+    void EventAction::UpdateRecorded(const G4bool update)
+    {
+        Recorded = update;
     }
 
     void EventAction::EndOfEventAction(const G4Event*)

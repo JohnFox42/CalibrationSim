@@ -5,6 +5,7 @@
 #define BasicDetectorRunAction_h 1
 
 #include "G4UserRunAction.hh"
+#include "G4Accumulable.hh"
 
 class G4Run;
 
@@ -18,6 +19,10 @@ namespace Calibration
 
         void BeginOfRunAction(const G4Run*) override;
         void EndOfRunAction(const G4Run*) override;
+        void IterateGeHitCount();
+
+        private:
+        G4Accumulable<G4int> fGeHitCount = 0;
     };
 }
 

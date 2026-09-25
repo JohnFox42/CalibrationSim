@@ -59,6 +59,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     //Creating the logical germanium detector and filling with germanium
     G4LogicalVolume* GeDetectorLog = new G4LogicalVolume(GeDetectorTube,Ge,"GeDetector");
 
+    //Updating the logical pointer
+    fGeDetector = GeDetectorLog;
+
     //Creating the beamline housing
     G4double HouseOuterRadius = 5.11*cm;
     G4double HouseInnerRadius = 5.08*cm;

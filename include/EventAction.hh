@@ -19,8 +19,11 @@ namespace Calibration
 
         void BeginOfEventAction(const G4Event*) override;
         void EndOfEventAction(const G4Event*) override;
+        void UpdateRecorded(const G4bool);
+        G4bool ReturnRecorded()const{return Recorded;}
         private:
         RunAction* fRunAction = nullptr;
+        G4bool Recorded = false;
     };
 }
 
