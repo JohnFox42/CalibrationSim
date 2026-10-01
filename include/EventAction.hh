@@ -21,9 +21,11 @@ namespace Calibration
         void EndOfEventAction(const G4Event*) override;
         void UpdateRecorded(const G4bool);
         G4bool ReturnRecorded()const{return Recorded;}
+        void AddEdep(const G4double);
         private:
         RunAction* fRunAction = nullptr;
         G4bool Recorded = false;
+        G4double GeEdep = 0;
     };
 }
 

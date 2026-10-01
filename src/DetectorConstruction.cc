@@ -44,7 +44,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4LogicalVolume* SiDetectorLog = new G4LogicalVolume(SiDetectorTube,Si,"SiDetector");
 
     //Dimensions for the germanium detector
-    G4double GeOuterRadius = 4.*cm;
+    G4double GeOuterRadius = 2.*cm;
     G4double GeInnerRadius = 0.*cm; 
     G4double GeHz = 3.5*cm;
     G4double GeStartAngle = 0.*deg;
@@ -91,6 +91,25 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     //Creating the logical housing cap and filling with aluminum
     G4LogicalVolume* BeamlineHousingCapLog = new G4LogicalVolume(BeamlineHousingCap,Al,"BeamlineHousingCap");
 
+    //Creating the Ge Housing 
+    G4double GeHousingOuterRadius = 2.5*cm;
+    G4double GeHousingInnerRadius = 2.2*cm;
+    G4double GeHousingHz = 4*cm;
+    G4double GeHousingStartAngle = 0*deg;
+    G4double GeHousingSpanningAngle = 360*deg;
+
+    //Building the Ge Housing
+    G4Tubs* GeHousing = new G4Tubs("GeHousing",GeHousingInnerRadius,GeHousingOuterRadius,GeHousingHz,GeHousingStartAngle,GeHousingSpanningAngle);
+
+    //Creating the logical Ge Housing and filling with aluminum
+    G4LogicalVolume* GeHousingLog = new G4LogicalVolume(GeHousing,Al,"GeHousing");
+
+    //Creating the Ge Housing cap
+    G4Tubs* GeHousingCap = new G4Tubs("GeHousingCap",0,2.5*cm,1.5*mm,0*deg,360*deg);
+
+    //Creating the logical Ge Housing cap and filling with aluminum
+    G4LogicalVolume* GeHousingCapLog = new G4LogicalVolume(GeHousingCap,Al,"GeHousingCap");
+
     //Placing the world volume
     G4VPhysicalVolume* worldPhys = new G4PVPlacement(0,G4ThreeVector(0,0,0),worldLog,"World",nullptr,false,0);
 
@@ -98,7 +117,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4VPhysicalVolume* SiDetectorPhys = new G4PVPlacement(0,G4ThreeVector(0,0,0),SiDetectorLog,"SiDetector",worldLog,false,0);
 
     //Placing the germanium detector 
-    G4VPhysicalVolume* GeDetectorPhys = new G4PVPlacement(0,G4ThreeVector(0,0,8.4175*cm),GeDetectorLog,"GeDetector",worldLog,false,0);
+    G4RotationMatrix Rot = G4RotationMatrix();
+    Rot.rotateY(30*deg);
+    G4VPhysicalVolume* GeDetectorPhys = new G4PVPlacement(G4Transform3D(Rot,G4ThreeVector(9.2975*sin(30*deg)*cm,0,9.2975*cos(30*deg)*cm)),GeDetectorLog,"GeDetector",worldLog,false,0);
+
+    //Placing the Ge housing
+    G4VPhysicalVolume* GeHousingPhys = new G4PVPlacement(G4Transform3D(Rot,G4ThreeVector(9.3975*sin(30*deg)*cm,0,9.3975*cos(30*deg)*cm)),GeHousingLog,"GeHousing",worldLog,false,0);
+    G4VPhysicalVolume* GeHousingCapPhys = new G4PVPlacement(G4Transform3D(Rot,G4ThreeVector(5.3975*sin(30*deg)*cm,0,5.3975*cos(30*deg)*cm)),GeHousingCapLog,"GeHousingCap",worldLog,false,0); 
 
     //Placing the beamline housing
     G4VPhysicalVolume* BeamlineHousingPhys = new G4PVPlacement(0,G4ThreeVector(0,0,-8.73*cm),BeamlineHousingLog,"BeamlineHousing",worldLog,false,0);

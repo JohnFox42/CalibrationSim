@@ -23,10 +23,14 @@ namespace Calibration
     {
         auto detectorConstruction = static_cast<const DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
         auto* postVolume = step->GetPostStepPoint()->GetPhysicalVolume();
-        if (postVolume && postVolume->GetLogicalVolume()==detectorConstruction->GetGeDetector() && !(fEventAction->ReturnRecorded()))
+        if (postVolume && postVolume->GetLogicalVolume()==detectorConstruction->GetGeDetector())
         {
-            fRunAction->IterateGeHitCount();
-            fEventAction->UpdateRecorded(true);
+            fEventAction->AddEdep(step->GetTotalEnergyDeposit());
+            if (!(fEventAction->ReturnRecorded()))
+            {
+                fRunAction->IterateGeHitCount();
+                fEventAction->UpdateRecorded(true);
+            }
         }
     }
 }

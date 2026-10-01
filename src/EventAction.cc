@@ -15,6 +15,7 @@ namespace Calibration
     void EventAction::BeginOfEventAction(const G4Event*)
     {
         Recorded = false;
+        GeEdep = 0;
     }
 
     void EventAction::UpdateRecorded(const G4bool update)
@@ -22,7 +23,23 @@ namespace Calibration
         Recorded = update;
     }
 
-    void EventAction::EndOfEventAction(const G4Event*)
+    void EventAction::AddEdep(const G4double edep)
     {
+        GeEdep += edep;
+    }
+
+    void EventAction::EndOfEventAction(const G4Event* event)
+    {
+        auto AnalysisManager = G4RootAnalysisManager::Instance();
+        if (Recorded)
+        {
+            AnalysisManager->FillH1(0,GeEdep);
+        }
+
+        auto eventID = event->GetEventID();
+        if (eventID % 100000 == 0)
+        {
+            G4cout << "Event: " << eventID << G4endl;
+        }
     }
 }
