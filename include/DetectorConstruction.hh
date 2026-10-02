@@ -8,6 +8,7 @@
 class G4VPhysicalVolume;
 class G4LogicalVolume;
 
+extern const G4double DetectorRotation;
 namespace Calibration
 {
 class DetectorConstruction : public G4VUserDetectorConstruction

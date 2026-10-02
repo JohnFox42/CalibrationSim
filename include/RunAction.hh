@@ -9,6 +9,8 @@
 
 class G4Run;
 
+extern const G4double DetectorRotation;
+const double DetectorRotateHold = static_cast<G4double>(DetectorRotation);
 namespace Calibration
 {
     class RunAction : public G4UserRunAction

@@ -10,6 +10,8 @@
 #include "G4UImanager.hh"
 #include "Randomize.hh"
 #include <ctime>
+//Global Detector Rotation
+const G4double DetectorRotation = 50*deg;
 
 int main(int argc, char** argv)
 {

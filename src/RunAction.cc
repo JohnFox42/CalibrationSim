@@ -17,7 +17,7 @@ RunAction::RunAction()
     AnalysisManager->SetVerboseLevel(1);
     AnalysisManager->SetDefaultFileType("root");
     AnalysisManager->SetNtupleMerging(true);
-    AnalysisManager->CreateH1("GeEdep","Energy Deposited into the Germanium Detector",105,0,420*keV);
+    AnalysisManager->CreateH1("GeEdep","Energy Deposited into the Germanium Detector at: "+std::to_string(DetectorRotateHold/deg)+"deg",105,0,420*keV);
 }
 
 void RunAction::BeginOfRunAction(const G4Run* run)
