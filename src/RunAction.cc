@@ -18,6 +18,7 @@ RunAction::RunAction()
     AnalysisManager->SetDefaultFileType("root");
     AnalysisManager->SetNtupleMerging(true);
     AnalysisManager->CreateH1("GeEdep","Energy Deposited into the Germanium Detector at: "+std::to_string(DetectorRotateHold/deg)+"deg",105,0,420*keV);
+    AnalysisManager->CreateH1("CoincidenceEdep","Energy deposited in both the Germanium and Silicon Detector",105,0,420*keV);
 }
 
 void RunAction::BeginOfRunAction(const G4Run* run)
@@ -45,11 +46,7 @@ void RunAction::EndOfRunAction(const G4Run* run)
     //Output Statistics
     if (IsMaster())
     {
-        G4cout << "The total hit count of the Ge detector was: " << TotalGeHitCount << '\n';
-        G4double prob = static_cast<G4double>(TotalGeHitCount)/(run->GetNumberOfEvent());
-        G4cout << "This is a hit efficiency of: " << prob << '\n';
-        G4double stdev = sqrt((prob)*(1-prob)/(run->GetNumberOfEvent()));
-        G4cout << "With standard deviation:" << stdev << G4endl;
+        G4cout << "The total edep count between 302keV and 322keV is: " << TotalGeHitCount << '\n';
     }
     AnalysisManager->Write();
     AnalysisManager->CloseFile();

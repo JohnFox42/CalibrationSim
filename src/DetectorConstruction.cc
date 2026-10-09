@@ -43,6 +43,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     //Creating the logical detector volume and filling with silicon
     G4LogicalVolume* SiDetectorLog = new G4LogicalVolume(SiDetectorTube,Si,"SiDetector");
 
+    //Update silicon detector pointer
+    fSiDetector = SiDetectorLog;
+
     //Dimensions for the germanium detector
     G4double GeOuterRadius = 4.*cm;
     G4double GeInnerRadius = 0.*cm; 

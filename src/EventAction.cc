@@ -16,6 +16,7 @@ namespace Calibration
     {
         Recorded = false;
         GeEdep = 0;
+        SiEdep = 0;
     }
 
     void EventAction::UpdateRecorded(const G4bool update)
@@ -28,12 +29,23 @@ namespace Calibration
         GeEdep += edep;
     }
 
+    void EventAction::AddSiEdep(const G4double edep)
+    {
+        SiEdep += edep;
+    }
+
     void EventAction::EndOfEventAction(const G4Event* event)
     {
         auto AnalysisManager = G4RootAnalysisManager::Instance();
         if (Recorded)
         {
             AnalysisManager->FillH1(0,GeEdep);
+            G4double CoinEdep = SiEdep+GeEdep;
+            AnalysisManager->FillH1(1,CoinEdep);
+            if (GeEdep>= 302*keV && GeEdep<= 322*keV)
+            {
+                fRunAction->IterateGeHitCount();
+            }
         }
 
         auto eventID = event->GetEventID();

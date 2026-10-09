@@ -22,10 +22,12 @@ namespace Calibration
         void UpdateRecorded(const G4bool);
         G4bool ReturnRecorded()const{return Recorded;}
         void AddEdep(const G4double);
+        void AddSiEdep(const G4double);
         private:
         RunAction* fRunAction = nullptr;
         G4bool Recorded = false;
         G4double GeEdep = 0;
+        G4double SiEdep = 0;
     };
 }
 

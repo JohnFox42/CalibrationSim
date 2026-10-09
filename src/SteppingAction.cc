@@ -28,9 +28,12 @@ namespace Calibration
             fEventAction->AddEdep(step->GetTotalEnergyDeposit());
             if (!(fEventAction->ReturnRecorded()))
             {
-                fRunAction->IterateGeHitCount();
                 fEventAction->UpdateRecorded(true);
             }
+        }
+        if (postVolume && postVolume->GetLogicalVolume()==detectorConstruction->GetSiDetector())
+        {
+            fEventAction->AddSiEdep(step->GetTotalEnergyDeposit());
         }
     }
 }
